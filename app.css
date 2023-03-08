@@ -158,3 +158,16 @@ main{
         grid-template-columns: repeat(1,1fr);
     }
 }
+
+.menu-nav{
+    position: relative;
+    left: 0;
+}
+.dropdown-container{
+    position: absolute;
+    right: 0;
+
+}
+.three-dots{
+    padding-left: 50px
+}
