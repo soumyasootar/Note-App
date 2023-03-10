@@ -11,12 +11,10 @@ const saveNotes = () => {
   let obj = { heading: "", body: "", colour: "#FFFFFF" };
   let j=0
   notes.forEach((element, i) => {
-    // console.log("element111: ", element.style.backgroundColor=="rgb(255, 255, 255)"?"t":"f");
-
     if (i % 2 == 0) {
-      obj = { ...obj, heading: element.value ,colour:element.style.backgroundColor=='rgb(255, 255, 255)"'?"#FAF1DB":"#FFFFFF" };
+      obj = { ...obj, heading: element.value, colour: element.style.backgroundColor };
     } else {
-      obj = { ...obj, body: element.value, colour:element.style.backgroundColor=='rgb(255, 255, 255)"'?"#FAF1DB":"#FFFFFF" ,index:j };
+      obj = { ...obj, body: element.value, colour: element.style.backgroundColor, index: j };
       j++;
       data.push(obj);
       obj = {};
@@ -31,7 +29,7 @@ const saveNotes = () => {
 
 const addNote = (obj = { heading: "", body: "", colour: "#FFFFFF" }) => {
   const note = document.createElement("div");
-  note.style.backgroundColor=obj.colour
+  note.style.backgroundColor = obj.colour;
   note.classList.add("notes");
   note.innerHTML = `<div class="heading">
     <textarea placeholder="Heading..." style="background-color: ${obj.colour};" onblur="saveNotes()">${obj.heading}</textarea>
@@ -43,7 +41,7 @@ const addNote = (obj = { heading: "", body: "", colour: "#FFFFFF" }) => {
         <hr>
         <div id="deletenote">Delete</div>
         <hr>
-          <div id="changecolour">Important</div>
+          <div id="changecolour">Colour</div>
         </div>
       </div>
     </div>
@@ -51,7 +49,6 @@ const addNote = (obj = { heading: "", body: "", colour: "#FFFFFF" }) => {
   <div class="note-body">
     <textarea placeholder="Body..." style="background-color: ${obj.colour};" onblur="saveNotes()">${obj.body}</textarea>
   </div>`;
-
   //-------------------Delete Note-----------------------------------------
   note.querySelector("#deletenote").addEventListener("click", function () {
     note.remove();
@@ -59,18 +56,25 @@ const addNote = (obj = { heading: "", body: "", colour: "#FFFFFF" }) => {
   });
 
   note.querySelector("#changecolour").addEventListener("click", function () {
-    changecolour(obj)
+    console.log(note.style.backgroundColor==="rgb(250, 241, 219)");
+    if(note.style.backgroundColor==="rgb(250, 241, 219)"){
+      note.style.backgroundColor = "#FFFFFF";
+      note.querySelectorAll("textarea")[0].style.backgroundColor = "#FFFFFF";
+      note.querySelectorAll("textarea")[1].style.backgroundColor = "#FFFFFF";
+    }else {
+      note.style.backgroundColor = "#FAF1DB";
+      note.querySelectorAll("textarea")[0].style.backgroundColor = "#FAF1DB";
+      note.querySelectorAll("textarea")[1].style.backgroundColor = "#FAF1DB";
+
+    }
+    saveNotes();
   });
 
-  //save note
-  //   note.querySelector("#savenote").addEventListener("click", function () {
-  //     saveNotes();
-  //   });
   main.appendChild(note);
-
   //if user added new note it should be saved
   saveNotes();
 };
+
 // ------------------CHANGE COLOUR-------------------
 function changecolour(obj){
   console.log("obj: ", obj);
